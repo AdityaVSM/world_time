@@ -1,19 +1,21 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
 class WorldTime{
-  late String location; //location name from UI
-  late String time; //the time in the location
-  late String flag_url;  //url to asset flag icon
-  late String url;//location url for api end point
+   late String location; //location name from UI
+   late String time; //the time in the location
+   late String flag_url;  //url to asset flag icon
+   late String url;//location url for api end point
+   late bool isDayTime;   //true=day
 
-  WorldTime({required this.location, required this.flag_url, required this.url});
+  WorldTime({ required this.location,  required this.flag_url,  required this.url});
 
   Future<void> getTime() async{
     //get data
-    try {
+    try { //to see loading screen for bit long time
       Uri url1 = Uri.parse("http://worldtimeapi.org/api/timezone/$url");
       Response response = await get(url1);
       Map data = jsonDecode(response.body);

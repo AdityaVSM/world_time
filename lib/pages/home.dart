@@ -44,11 +44,11 @@ class _HomeState extends State<Home> {
                 ),
                 SizedBox(height:20),
                 Text(
-                    data['time'],
+                  data['time'],
                   style: TextStyle(
                     fontSize: 66,
                   ),
-                )
+                ),
               ],
             ),
           )
