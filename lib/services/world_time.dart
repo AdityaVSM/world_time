@@ -31,6 +31,7 @@ class WorldTime{
       
       //set time property
       time = DateFormat.jm().format(now);
+      isDayTime = (now.hour>6 && now.hour<20) ? true : false;
     } catch (e) {
       print('Caught error: $e');
       time="Could not get time data";
