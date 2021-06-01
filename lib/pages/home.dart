@@ -14,12 +14,13 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
 
-    final data = ModalRoute.of(context)!.settings.arguments as Map;
+    data = data.isNotEmpty ? data :ModalRoute.of(context)!.settings.arguments as Map;
     print(data);
 
     //set bg
-    String bgImage = data['isDaytime'] ? 'day.png' : 'night.png';
-    Color? bgColor = data['isDaytime'] ? Colors.lightBlue[500] : Colors.indigo[800];
+    String bgImage = data['isDaytime'] ? 'day.jpg' : 'night.jpg';
+    Color? bgColor = data['isDaytime'] ? Colors.white : Colors.indigo[700];
+    Color? textColor = data['isDaytime'] ? Colors.black : Colors.white;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -36,8 +37,16 @@ class _HomeState extends State<Home> {
               child: Column(
                 children: <Widget>[
                   ElevatedButton.icon(
-                      onPressed: (){
-                        Navigator.pushNamed(context, '/location');
+                      onPressed: () async{
+                        dynamic result = await Navigator.pushNamed(context, '/location');
+                        setState(() {
+                          data = {
+                            'time' : result['time'],
+                            'location' : result['location'],
+                            'isDaytime' : result['isDaytime'],
+                            'flag' : result['flag']
+                          };
+                        });
                       },
                       icon: Icon(
                         Icons.edit_location,
@@ -59,7 +68,7 @@ class _HomeState extends State<Home> {
                         style: TextStyle(
                           fontSize: 28,
                           letterSpacing: 2,
-                          color: Colors.white,
+                          color: textColor,
                         ),
                       ),
                     ],
@@ -69,7 +78,7 @@ class _HomeState extends State<Home> {
                     data['time'],
                     style: TextStyle(
                       fontSize: 66,
-                      color: Colors.white,
+                      color: textColor,
                     ),
                   ),
                 ],
